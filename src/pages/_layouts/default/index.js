@@ -1,13 +1,14 @@
 import React from 'react';
 
 import Header from '~/components/Header';
-// import { Container } from './styles';
+
+import { Wrapper } from './styles';
 
 export default function DefaultLayout({ children }) {
   return (
-    <div>
+    <Wrapper>
       <Header />
       {children}
-    </div>
+    </Wrapper>
   );
 }

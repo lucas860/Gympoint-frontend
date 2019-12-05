@@ -1,16 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '~/services/auth';
+import history from '~/services/history';
+import logo from '~/assets/logo-menu.png';
 
 import { Container, Content, Menu } from './styles';
 
 export default function Header() {
+  function handleLogout() {
+    logout();
+    history.push('/login');
+  }
+
   return (
     <Container>
       <Content>
         <nav>
-          <Link to="/">
-            <img src="" alt="" />
-          </Link>
+          <img src={logo} alt="Gympoint" />
+
           <Menu>
             <li>
               <Link to="/">alunos</Link>
@@ -29,7 +36,9 @@ export default function Header() {
 
         <aside>
           <strong>Lucas Fernandes</strong>
-          <button type="submit">Sair do sistema</button>
+          <button type="button" onClick={handleLogout}>
+            Sair do sistema
+          </button>
         </aside>
       </Content>
     </Container>

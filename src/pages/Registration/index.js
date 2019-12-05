@@ -1,7 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import api from '~/services/api';
+import active from '~/assets/active.svg';
+import inactive from '~/assets/inactive.svg';
 
-// import { Container } from './styles';
+import ContentHeader from '~/components/ContentHeader';
+import RegisterButton from '~/components/RegisterButton';
 
-export default function Registration() {
-  return <h1>Registrations</h1>;
+import { EditButton, DelButton } from '~/pages/_layouts/default/styles';
+import { RegisterList, TableList } from './styles';
+
+export default function RegistrationList() {
+  const [regs, setRegs] = useState([]);
+
+  useEffect(() => {
+    async function loadRegs() {
+      const response = await api.get('/registration');
+
+      const data = response.data.map(d => ({
+        ...d,
+        startDate: format(parseISO(d.start_date), "d 'de' MMMM 'de' yyyy", {
+          locale: pt,
+        }),
+        endDate: format(parseISO(d.end_date), "d 'de' MMMM 'de' yyyy", {
+          locale: pt,
+        }),
+      }));
+
+      setRegs(data);
+    }
+
+    loadRegs();
+  }, []);
+
+  return (
+    <RegisterList>
+      <ContentHeader>
+        <h1>Gerenciando Matrículas</h1>
+        <div>
+          <RegisterButton to="/registration" />
+        </div>
+      </ContentHeader>
+
+      <TableList>
+        <thead>
+          <tr>
+            <th>ALUNO</th>
+            <th>PLANO</th>
+            <th>INÍCIO</th>
+            <th>TÉRMINO</th>
+            <th>ATIVA</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {regs.map(reg => (
+            <tr key={reg.id}>
+              <td>{reg.student.name}</td>
+              <td>{reg.plan.title}</td>
+              <td>{reg.startDate}</td>
+              <td>{reg.endDate}</td>
+              <td>
+                {reg.active ? (
+                  <img src={active} alt="gympoint" />
+                ) : (
+                  <img src={inactive} alt="gympoint" />
+                )}
+              </td>
+              <td>
+                <EditButton to={`/registration/${reg.id}`}>editar</EditButton>
+
+                <DelButton>apagar</DelButton>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </TableList>
+    </RegisterList>
+  );
 }
