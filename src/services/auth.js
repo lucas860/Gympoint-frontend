@@ -1,15 +1,15 @@
 export function login(token, profile) {
-  localStorage.setItem('gympoint', JSON.stringify({ auth: token, profile }));
+  localStorage.setItem('@Gympoint', JSON.stringify({ auth: token, profile }));
 }
 
 export function logout() {
-  localStorage.removeItem('gympoint');
+  localStorage.removeItem('@Gympoint');
 }
 
 export function isAuthenticated() {
-  return JSON.parse(localStorage.getItem('gympoint') !== null);
+  return JSON.parse(localStorage.getItem('@Gympoint')) !== null;
 }
 
 export function getToken() {
-  return JSON.parse(localStorage.getItem('gympoint'));
+  return JSON.parse(localStorage.getItem('@Gympoint'));
 }

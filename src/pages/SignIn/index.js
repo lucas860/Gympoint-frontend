@@ -13,15 +13,11 @@ import { Container, Content } from './styles';
 export default function SignIn() {
   async function handleSubmit({ email, password }) {
     try {
-      const response = await api.post('session', { email, password });
+      const response = await api.post('/session', { email, password });
 
       const { token, user } = response.data;
 
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
-      const profile = {
-        name: user.name,
-      };
+      const profile = user.name;
 
       login(token, profile);
 

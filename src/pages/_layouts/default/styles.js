@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 
 export const Wrapper = styled.div`
-  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
   background: #f5f5f5;
 `;
 
@@ -55,7 +56,7 @@ export const Line = styled.div`
   display: flex;
   justify-content: space-between;
 
-  div {
+  > div {
     width: 100%;
     margin-right: 20px;
 

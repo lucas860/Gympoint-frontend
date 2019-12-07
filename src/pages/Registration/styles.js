@@ -71,6 +71,7 @@ export const CardSelect = styled(Select)`
   padding: 0 15px;
   border: 1px solid #dddddd;
   border-radius: 4px;
+  font-size: 16px;
   color: #666;
 
   margin-top: 10px;
@@ -78,5 +79,21 @@ export const CardSelect = styled(Select)`
 
   &:last-child {
     margin-bottom: 0;
+  }
+`;
+
+export const BoxDatePicker = styled.div`
+  strong {
+    margin-bottom: 10px;
+  }
+
+  input {
+    height: 45px;
+    padding: 0 20px;
+    color: #666;
+  }
+
+  fieldset {
+    border: 1px solid #ddd;
   }
 `;

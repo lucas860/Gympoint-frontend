@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import ContentHeader from '~/components/ContentHeader';
 
@@ -10,10 +11,17 @@ import {
   CardInput,
   Line,
 } from '~/pages/_layouts/default/styles';
-import { CardSelect } from './styles';
+import { BoxDatePicker, CardSelect } from './styles';
 
 export default function RegistrationUpdate() {
   const [options, setOptions] = useState([]);
+  const [selectDate, setSelectDate] = useState();
+
+  function handleSubmit() {}
+
+  function changeDate(date) {
+    setSelectDate(date);
+  }
 
   return (
     <Container>
@@ -28,29 +36,35 @@ export default function RegistrationUpdate() {
         </div>
       </ContentHeader>
 
-      <Card id="registration">
+      <Card id="registration" onSubmit={handleSubmit}>
         <strong>NOME DO ALUNO</strong>
-        <CardInput name="name" type="text" />
+        <CardSelect name="student" options={options} />
 
         <Line>
           <div>
             <strong>PLANO</strong>
-            <CardSelect name="name" options={options} />
+            <CardSelect name="plan" options={options} />
           </div>
 
-          <div>
+          <BoxDatePicker>
             <strong>DATA DE INÍCIO</strong>
-            <CardInput name="name" type="date" />
-          </div>
+            <KeyboardDatePicker
+              disableToolbar
+              inputVariant="outlined"
+              format="dd/MM/yyyy"
+              value={selectDate}
+              onChange={changeDate}
+            />
+          </BoxDatePicker>
 
           <div>
             <strong>DATA DE TÉRMINO</strong>
-            <CardInput name="name" type="text" disabled readOnly />
+            <CardInput name="end_date" disabled readOnly />
           </div>
 
           <div>
             <strong>VALOR FINAL</strong>
-            <CardInput name="name" type="text" disabled readOnly />
+            <CardInput name="totalPrice" disabled readOnly />
           </div>
         </Line>
       </Card>

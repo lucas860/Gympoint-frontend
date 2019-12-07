@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { KeyboardDatePicker } from '@material-ui/pickers';
+import React, { useState, useEffect, useMemo } from 'react';
+import { parseISO, addMonth } from 'date-fns';
 import { toast } from 'react-toastify';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import api from '~/services/api';
+import formatPrice from '~/util/format';
 
 import ContentHeader from '~/components/ContentHeader';
 
@@ -13,12 +15,22 @@ import {
   CardInput,
   Line,
 } from '~/pages/_layouts/default/styles';
-import { CardSelect } from './styles';
+import { CardSelect, BoxDatePicker } from './styles';
 
 export default function RegistrationRegister() {
+  const [getPlan, setGetPlan] = useState();
   const [plans, setPlans] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectDate, setSelectDate] = useState(new Date());
+
+  const totalPrice = useMemo(() => {
+    if (getPlan) {
+      const { price, duration } = plans.find(p => p.id === Number(getPlan));
+
+      return formatPrice(price * duration);
+    }
+    return formatPrice(0);
+  }, [getPlan]);
 
   useEffect(() => {
     async function loadOptions() {
@@ -41,8 +53,6 @@ export default function RegistrationRegister() {
 
   async function handleSubmit({ student, plan }) {
     try {
-      console.tron.log(Number(student), Number(plan), selectDate);
-
       await api.post('/registration', {
         student: Number(student),
         plan: Number(plan),
@@ -78,24 +88,26 @@ export default function RegistrationRegister() {
         <strong>NOME DO ALUNO</strong>
         <CardSelect name="student" options={students} />
 
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          inputVariant="outlined"
-          format="dd/MM/yyyy"
-          value={selectDate}
-          name="start_date"
-          onChange={changeDate}
-        />
         <Line>
           <div>
             <strong>PLANO</strong>
-            <CardSelect name="plan" options={plans} />
+            <CardSelect
+              name="plan"
+              options={plans}
+              onChange={e => setGetPlan(e.target.value)}
+            />
           </div>
 
-          <div>
+          <BoxDatePicker>
             <strong>DATA DE INÍCIO</strong>
-          </div>
+            <KeyboardDatePicker
+              disableToolbar
+              inputVariant="outlined"
+              format="dd/MM/yyyy"
+              value={selectDate}
+              onChange={changeDate}
+            />
+          </BoxDatePicker>
 
           <div>
             <strong>DATA DE TÉRMINO</strong>
@@ -104,7 +116,7 @@ export default function RegistrationRegister() {
 
           <div>
             <strong>VALOR FINAL</strong>
-            <CardInput name="totalPrice" disabled readOnly />
+            <CardInput name="totalPrice" value={totalPrice} disabled readOnly />
           </div>
         </Line>
       </Card>

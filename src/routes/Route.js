@@ -14,17 +14,7 @@ export default function RouteWrapper({
   ...rest
 }) {
   const signed = isAuthenticated();
-
-  if (signed) {
-    const token = getToken().auth;
-    const exp = jwtDecode(token).exp * 1000;
-
-    if (Date.now() > exp) {
-      logout();
-      toast.error('Sessão expirada');
-      return <Redirect to="/login" />;
-    }
-  }
+  const token = getToken();
 
   if (!signed && isPrivate) {
     return <Redirect to="/login" />;
@@ -32,6 +22,12 @@ export default function RouteWrapper({
 
   if (signed && !isPrivate) {
     return <Redirect to="/" />;
+  }
+
+  if (signed && jwtDecode(token.auth).exp * 1000 < Date.now()) {
+    toast.error('Sessão expirada!');
+    logout();
+    return <Redirect to="/login" />;
   }
 
   if (signed) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { logout } from '~/services/auth';
+import { getToken, logout } from '~/services/auth';
 import history from '~/services/history';
 import logo from '~/assets/logo-menu.png';
 

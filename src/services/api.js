@@ -5,18 +5,14 @@ const api = axios.create({
   baseURL: 'http://localhost:3333',
 });
 
-if (isAuthenticated()) {
-  api.interceptors.request.use(config => {
-    const token = getToken().auth;
+api.interceptors.request.use(async config => {
+  const token = getToken();
 
-    const headers = { ...config.headers };
+  if (token) {
+    config.headers.Authorization = `Bearer ${token.auth}`;
+  }
 
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-
-    return { ...config, headers };
-  });
-}
+  return config;
+});
 
 export default api;
