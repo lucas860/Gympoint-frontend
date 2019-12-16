@@ -91,13 +91,16 @@ export const SaveButton = styled.button`
   font-weight: bold;
 `;
 
-export const EditButton = styled(Link)`
+export const EditButton = styled.button`
+  background: none;
+  border: none;
+  margin-left: 20px;
   color: #4d85ee;
 `;
 
 export const DelButton = styled.button`
   background: none;
   border: none;
-  margin-left: 15px;
+  margin-left: 20px;
   color: #de3b3b;
 `;

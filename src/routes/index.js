@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import Route from './Route';
 
 import SignIn from '~/pages/SignIn';
@@ -21,19 +21,25 @@ import RegistrationUpdate from '~/pages/registration/edit';
 
 // Help pages
 import HelpOrders from '~/pages/help/index';
+import Answer from '~/pages/help/AnswerModal';
 
 export default function Routes() {
   return (
     <Switch>
       <Route path="/login" component={SignIn} />
 
-      <Route path="/" exact component={StudentList} isPrivate />
-      <Route path="/student" exact component={StudentRegister} isPrivate />
-      <Route path="/student/:student_id" component={StudentUpdate} isPrivate />
+      <Route path="/students" exact component={StudentList} isPrivate />
+      <Route
+        path="/student/register"
+        exact
+        component={StudentRegister}
+        isPrivate
+      />
+      <Route path="/student/edit" component={StudentUpdate} isPrivate />
 
       <Route path="/plans" component={PlanList} isPrivate />
-      <Route path="/plan" exact component={PlanRegister} isPrivate />
-      <Route path="/plan/:plan_id" component={PlanUpdate} isPrivate />
+      <Route path="/plan/register" exact component={PlanRegister} isPrivate />
+      <Route path="/plan/edit" component={PlanUpdate} isPrivate />
 
       <Route path="/registrations" component={RegistrationList} isPrivate />
       <Route
@@ -49,6 +55,9 @@ export default function Routes() {
       />
 
       <Route path="/help" component={HelpOrders} isPrivate />
+      <Route path="/help/answer" component={Answer} isPrivate />
+
+      <Redirect from="/*" to="/students" />
     </Switch>
   );
 }

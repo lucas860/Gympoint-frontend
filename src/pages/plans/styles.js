@@ -8,12 +8,15 @@ export const TableList = styled.table`
 
   thead tr {
     padding: 0;
+
+    th {
+      color: #444;
+    }
   }
 
   button {
     background: none;
     border: 0;
-    padding-left: 8px;
   }
 `;
 
@@ -31,9 +34,8 @@ export const TableLine = styled.tr`
 
   th {
     width: 35%;
-    color: #444;
-    font-size: 16px;
     text-align: left;
+    font-size: 16px;
 
     + th {
       width: 20%;

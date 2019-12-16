@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { parseISO, addMonth } from 'date-fns';
+import { format, addMonths } from 'date-fns';
 import { toast } from 'react-toastify';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import api from '~/services/api';
@@ -18,10 +18,10 @@ import {
 import { CardSelect, BoxDatePicker } from './styles';
 
 export default function RegistrationRegister() {
-  const [getPlan, setGetPlan] = useState();
-  const [plans, setPlans] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectDate, setSelectDate] = useState(new Date());
+  const [plans, setPlans] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [getPlan, setGetPlan] = useState();
 
   const totalPrice = useMemo(() => {
     if (getPlan) {
@@ -29,8 +29,21 @@ export default function RegistrationRegister() {
 
       return formatPrice(price * duration);
     }
-    return formatPrice(0);
+
+    return null;
   }, [getPlan]);
+
+  const endDate = useMemo(() => {
+    if (getPlan) {
+      const { duration } = plans.find(p => p.id === Number(getPlan));
+
+      const data = format(addMonths(selectedDate, duration), 'dd/MM/yyyy');
+
+      return data;
+    }
+
+    return null;
+  }, [getPlan, selectedDate]);
 
   useEffect(() => {
     async function loadOptions() {
@@ -56,7 +69,7 @@ export default function RegistrationRegister() {
       await api.post('/registration', {
         student: Number(student),
         plan: Number(plan),
-        date: selectDate,
+        date: selectedDate,
       });
 
       toast.success('Matrícula cadastrada com sucesso!');
@@ -68,7 +81,7 @@ export default function RegistrationRegister() {
   }
 
   function changeDate(date) {
-    setSelectDate(date);
+    setSelectedDate(date);
   }
 
   return (
@@ -104,14 +117,14 @@ export default function RegistrationRegister() {
               disableToolbar
               inputVariant="outlined"
               format="dd/MM/yyyy"
-              value={selectDate}
+              value={selectedDate}
               onChange={changeDate}
             />
           </BoxDatePicker>
 
           <div>
             <strong>DATA DE TÉRMINO</strong>
-            <CardInput name="end_date" disabled readOnly />
+            <CardInput name="end_date" value={endDate} disabled readOnly />
           </div>
 
           <div>

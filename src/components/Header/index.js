@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getToken, logout } from '~/services/auth';
-import history from '~/services/history';
-import logo from '~/assets/logo-menu.png';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Content, Menu } from './styles';
 
+import logo from '~/assets/logo-menu.png';
+
 export default function Header() {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.admin);
+
   function handleLogout() {
-    logout();
-    history.push('/login');
+    dispatch(signOut());
   }
 
   return (
@@ -20,7 +24,7 @@ export default function Header() {
 
           <Menu>
             <li>
-              <Link to="/">alunos</Link>
+              <Link to="/students">alunos</Link>
             </li>
             <li>
               <Link to="/plans">planos</Link>
@@ -35,7 +39,7 @@ export default function Header() {
         </nav>
 
         <aside>
-          <strong>Lucas Fernandes</strong>
+          <strong>{user ? user.name : 'Admin'}</strong>
           <button type="button" onClick={handleLogout}>
             Sair do sistema
           </button>

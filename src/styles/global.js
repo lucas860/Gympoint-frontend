@@ -24,6 +24,15 @@ export default createGlobalStyle`
     font: 14px 'Roboto', sans-serif;
   }
 
+  input, textarea, p, tbody tr{
+    color: #666;
+  }
+
+  strong,
+  thead tr{
+    color: #444;
+  }
+
   input {
     ::-webkit-inner-spin-button,
     ::-webkit-outer-spin-button {

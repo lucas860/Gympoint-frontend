@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { toast } from 'react-toastify';
+
 import api from '~/services/api';
+import history from '~/services/history';
 import formatPrice from '~/util/format';
 
 import ContentHeader from '~/components/ContentHeader';
@@ -31,14 +33,26 @@ export default function PlanList() {
     loadPLans();
   }, []);
 
-  function handle() {}
+  function handleEditPlan({ id, title, duration, price }) {
+    history.push('/plan/edit', { plan: { id, title, duration, price } });
+  }
+
+  async function confirmDelete(id) {
+    const confirm = window.confirm('Deseja realmente deletar esse plano?');
+
+    if (confirm) {
+      await api.delete(`/plan/${id}`);
+
+      toast.success('Usuário deletado com sucesso');
+    }
+  }
 
   return (
     <Container>
       <ContentHeader>
         <h1>Gerenciando Planos</h1>
         <div>
-          <RegisterButton to="/plan" />
+          <RegisterButton to="/plan/register" />
         </div>
       </ContentHeader>
 
@@ -63,20 +77,11 @@ export default function PlanList() {
               </td>
               <td>{plan.priceFormatted}</td>
               <td>
-                <EditButton to={`/plan/${plan.id}`}>
-                  <MdEdit size={30} />
+                <EditButton onClick={() => handleEditPlan(plan)}>
+                  editar
                 </EditButton>
-                <DelButton
-                  type="button"
-                  onClick={() => {
-                    if (
-                      window.confirm('Deseja realmente deletar esse plano?')
-                    ) {
-                      handle();
-                    }
-                  }}
-                >
-                  <MdDelete size={30} />
+                <DelButton type="button" onClick={() => confirmDelete(plan.id)}>
+                  apagar
                 </DelButton>
               </td>
             </TableLine>

@@ -27,7 +27,7 @@ export default function StudentRegister() {
 
       if (response) {
         toast.success('Aluno cadastrado com sucesso!');
-        history.push('/');
+        history.push('/students');
       }
     } catch (err) {
       toast.error('Falha no cadastro. Verifique os dados informados!');
@@ -39,7 +39,7 @@ export default function StudentRegister() {
       <ContentHeader>
         <h1>Cadastro de aluno</h1>
         <div>
-          <BackButton to="/">VOLTAR</BackButton>
+          <BackButton to="/students">VOLTAR</BackButton>
 
           <SaveButton form="student" type="submit">
             SALVAR

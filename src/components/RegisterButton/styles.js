@@ -12,4 +12,5 @@ export const Button = styled(Link)`
   border: 0;
   border-radius: 4px;
   color: #fff;
+  font-weight: bold;
 `;

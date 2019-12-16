@@ -14,23 +14,12 @@ import {
   Line,
 } from '~/pages/_layouts/default/styles';
 
-export default function StudentUpdate({ match }) {
-  const [student, setStudent] = useState();
-
-  useEffect(() => {
-    async function loadFormData() {
-      const response = await api.get(`student/${match.params.student_id}`);
-
-      setStudent(response.data);
-    }
-
-    loadFormData();
-  }, []);
+export default function StudentUpdate(props) {
+  const [student, setStudent] = useState(props.location.state.student);
 
   async function handleSubmit({ name, email, idade, peso, altura }) {
-    console.tron.log(name, email, idade, peso, altura);
     try {
-      const response = await api.put(`/student/${match.params.student_id}`, {
+      const response = await api.put(`/student/${student.id}`, {
         name,
         email,
         idade,
@@ -51,7 +40,7 @@ export default function StudentUpdate({ match }) {
       <ContentHeader>
         <h1>Edição de aluno</h1>
         <div>
-          <BackButton to="/">VOLTAR</BackButton>
+          <BackButton to="/students">VOLTAR</BackButton>
 
           <SaveButton form="student" type="submit">
             SALVAR
@@ -77,7 +66,7 @@ export default function StudentUpdate({ match }) {
               name="peso"
               step={0.1}
               type="number"
-              placeholder="00,0"
+              placeholder="00,0 kg"
             />
           </div>
 
@@ -87,7 +76,7 @@ export default function StudentUpdate({ match }) {
               name="altura"
               step={0.01}
               type="number"
-              placeholder="0,00"
+              placeholder="0,00 m"
             />
           </div>
         </Line>

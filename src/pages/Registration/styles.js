@@ -33,6 +33,7 @@ export const TableList = styled.table`
       + th {
         width: 15%;
         justify-content: center;
+        text-align: center;
       }
 
       &:nth-child(4) {
@@ -51,6 +52,7 @@ export const TableList = styled.table`
       + td {
         width: 15%;
         justify-content: center;
+        text-align: center;
       }
 
       &:nth-child(4) {

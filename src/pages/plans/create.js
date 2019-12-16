@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
+
 import api from '~/services/api';
 import history from '~/services/history';
 import formatPrice from '~/util/format';
@@ -23,12 +24,10 @@ export default function PlanRegister() {
 
   async function handleSubmit({ title, duration, price }) {
     try {
-      const response = await api.post('/plans', { title, duration, price });
+      await api.post('/plans', { title, duration, price });
 
-      if (response) {
-        toast.success('Plano cadastrado com sucesso');
-        history.push('/plans');
-      }
+      toast.success('Plano cadastrado com sucesso');
+      history.push('/plans');
     } catch (err) {
       toast.error('Falha ao cadastrar o plano');
     }

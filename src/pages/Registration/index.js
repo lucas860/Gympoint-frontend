@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { toast } from 'react-toastify';
+
 import api from '~/services/api';
+import history from '~/services/history';
+
 import active from '~/assets/active.svg';
 import inactive from '~/assets/inactive.svg';
 
@@ -33,6 +37,29 @@ export default function RegistrationList() {
 
     loadRegs();
   }, []);
+
+  function handleEditRegistration({
+    id,
+    student,
+    plan,
+    price,
+    start_date,
+    end_date,
+  }) {
+    history.push('/registration/edit', {
+      reg: { id, student, plan, price, start_date, end_date },
+    });
+  }
+
+  async function confirmDelete(id) {
+    const confirm = window.confirm('Deseja realmente deletar esse plano?');
+
+    if (confirm) {
+      await api.delete(`/registration/${id}`);
+
+      toast.success('Usuário deletado com sucesso');
+    }
+  }
 
   return (
     <RegisterList>
@@ -69,9 +96,13 @@ export default function RegistrationList() {
                 )}
               </td>
               <td>
-                <EditButton to={`/registration/${reg.id}`}>editar</EditButton>
+                <EditButton onClick={() => handleEditRegistration(reg)}>
+                  editar
+                </EditButton>
 
-                <DelButton>apagar</DelButton>
+                <DelButton type="button" onClick={() => confirmDelete(reg.id)}>
+                  apagar
+                </DelButton>
               </td>
             </tr>
           ))}

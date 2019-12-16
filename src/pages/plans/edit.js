@@ -15,36 +15,24 @@ import {
   Line,
 } from '~/pages/_layouts/default/styles';
 
-export default function PlanUpdate({ match }) {
-  const [plan, setPlan] = useState();
-  const [dr, setDr] = useState(0);
-  const [pr, setPr] = useState(0);
+export default function PlanUpdate(props) {
+  const [plan, setPlan] = useState(props.location.state.plan);
+  const [dr, setDr] = useState(props.location.state.plan.duration);
+  const [pr, setPr] = useState(props.location.state.plan.price);
 
   const totalPrice = useMemo(() => formatPrice(dr * pr), [dr, pr]);
 
-  useEffect(() => {
-    async function loadFormData() {
-      const response = await api.get(`/plan/${match.params.plan_id}`);
-
-      setDr(response.data.duration);
-      setPr(response.data.price);
-      setPlan(response.data);
-    }
-
-    loadFormData();
-  }, []);
+  console.tron.log(plan);
 
   async function handleSubmit({ title, duration, price }) {
     try {
-      const response = await api.put(`/plans/${match.params.plan_id}`, {
+      await api.put(`/plans/${plan.id}`, {
         title,
         duration,
         price,
       });
 
-      if (response) {
-        toast.success('O Plano foi atualizado com sucesso!');
-      }
+      toast.success('O Plano foi atualizado com sucesso!');
     } catch (err) {
       toast.error('Falha ao atualizar os dados do plano!');
     }
