@@ -1,6 +1,13 @@
-export function listHelpOrders() {
+export function listHelpOrdersRequest() {
   return {
-    type: '@help/LIST_HELP_ORDERS',
+    type: '@help/LIST_HELP_ORDERS_REQUEST',
+  };
+}
+
+export function listHelpOrdersSuccess(list) {
+  return {
+    type: '@help/LIST_HELP_ORDERS_SUCCESS',
+    payload: { list },
   };
 }
 
@@ -17,15 +24,28 @@ export function closeHelpOrder() {
   };
 }
 
-export function answerRequest(answer) {
+export function handleAnswerText(text) {
   return {
-    type: '@help/ANSWER_HELP_REQUEST',
-    payload: { answer },
+    type: '@help/HANDLE_ANSWER_HELP_TEXT',
+    payload: { text },
   };
 }
 
-export function answerSuccess() {
+export function answerHelpRequest(helpOrder, answer) {
+  return {
+    type: '@help/ANSWER_HELP_REQUEST',
+    payload: { helpOrder, answer },
+  };
+}
+
+export function answerHelpSuccess() {
   return {
     type: '@help/ANSWER_HELP_SUCCESS',
+  };
+}
+
+export function helpFailure() {
+  return {
+    type: '@help/HELP_FAILURE',
   };
 }

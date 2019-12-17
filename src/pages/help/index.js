@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { openHelpOrder, closeHelpOrder } from '~/store/modules/help/action';
+import {
+  openHelpOrder,
+  closeHelpOrder,
+  listHelpOrdersRequest,
+} from '~/store/modules/help/action';
 
 import AnswerModal from './AnswerModal';
 
@@ -13,13 +17,11 @@ import { HelpContainer, Header, HelpList, AnswerButton } from './styles';
 export default function HelpOrders() {
   const dispatch = useDispatch();
   const open = useSelector(state => state.help.openned);
-  const [helpOrders, setHelpOrders] = useState([]);
+  const helpOrders = useSelector(state => state.help.helpList);
 
   useEffect(() => {
     async function loadHelpOrders() {
-      const response = await api.get('/help-orders');
-
-      setHelpOrders(response.data);
+      dispatch(listHelpOrdersRequest());
     }
 
     loadHelpOrders();
@@ -54,17 +56,12 @@ export default function HelpOrders() {
                 <AnswerButton onClick={() => handleOpen(hp)}>
                   responder
                 </AnswerButton>
-                <AnswerModal
-                  helpId={hp.id}
-                  question={hp.question}
-                  open={open}
-                  onClose={handleClose}
-                />
               </td>
             </tr>
           ))}
         </tbody>
       </HelpList>
+      <AnswerModal open={open} onClose={handleClose} />
     </HelpContainer>
   );
 }

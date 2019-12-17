@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import api from '~/services/api';
-import history from '~/services/history';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  handleAnswerText,
+  answerHelpRequest,
+} from '~/store/modules/help/action';
 
 import { ModalContainer, Answer, AnswerForm } from './styles';
 
-export default function AnswerModal({ helpId, question, ...props }) {
-  const [answer, setAnswer] = useState('');
+export default function AnswerModal(props) {
+  const dispatch = useDispatch();
+  const question = useSelector(state => state.help.question);
+  const helpId = useSelector(state => state.help.helpOrder);
+  const answer = useSelector(state => state.help.answer);
 
-  async function handleSubmit() {
-    // try {
-    //   await api.post(`/help-orders/${helpId}/answer`, {
-    //     answer,
-    //   });
+  function handleSubmit() {
+    dispatch(answerHelpRequest(helpId, answer));
+  }
 
-    //   history.push('/help');
-    // } catch (err) {
-    //   toast.error('Falha ao responder essa issue');
-    // }
-
-    console.tron.log(props);
+  function handleAnswer(text) {
+    dispatch(handleAnswerText(text));
   }
 
   return (
@@ -32,7 +32,11 @@ export default function AnswerModal({ helpId, question, ...props }) {
 
         <AnswerForm id="answer" onSubmit={handleSubmit}>
           <strong>SUA RESPOSTA</strong>
-          <textarea value={answer} onChange={e => setAnswer(e.target.value)} />
+          <textarea
+            name="answer"
+            value={answer}
+            onChange={e => handleAnswer(e.target.value)}
+          />
 
           <button type="submit">Responder aluno</button>
         </AnswerForm>
