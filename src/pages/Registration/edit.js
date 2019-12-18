@@ -22,6 +22,10 @@ export default function RegistrationUpdate(props) {
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);
   const [registration, setRegistration] = useState(props.location.state.reg);
+  const [selectedStudent, setSelectedStudent] = useState(
+    registration.student.id
+  );
+  const [selectedPlan, setSelectedPlan] = useState(registration.plan.id);
   const [defaultDate, setDefaultDate] = useState(
     parseISO(registration.start_date)
   );
@@ -75,9 +79,14 @@ export default function RegistrationUpdate(props) {
     setDefaultDate(selectedDate);
   }
 
-  async function changePlan(e) {
-    const p = await api.get(`/plan/${e.target.value}`);
+  function changeStudent(value) {
+    setSelectedStudent(value);
+  }
 
+  async function changePlan(value) {
+    const p = await api.get(`/plan/${value}`);
+
+    setSelectedPlan(value);
     setGetPlan(p.data);
     setPrice(p.data.duration * p.data.price);
   }
@@ -99,8 +108,9 @@ export default function RegistrationUpdate(props) {
         <strong>NOME DO ALUNO</strong>
         <CardSelect
           name="student"
-          value={registration.student.id}
+          value={selectedStudent}
           options={students}
+          onChange={e => changeStudent(e.target.value)}
         />
 
         <Line>
@@ -108,9 +118,9 @@ export default function RegistrationUpdate(props) {
             <strong>PLANO</strong>
             <CardSelect
               name="plan"
-              value={registration.plan.id}
+              value={selectedPlan}
               options={plans}
-              onChange={changePlan}
+              onChange={e => changePlan(e.target.value)}
             />
           </div>
 
