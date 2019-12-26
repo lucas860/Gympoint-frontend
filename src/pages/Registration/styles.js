@@ -8,10 +8,21 @@ export const RegisterList = styled.div`
 export const TableList = styled.table`
   background: #fff;
   width: 100%;
-  padding: 30px 30px;
+  padding: 30px;
   border-radius: 4px;
   font-size: 16px;
   color: #666;
+
+  thead {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+
+    tr {
+      padding: 0;
+    }
+  }
 
   tr {
     display: flex;
@@ -24,6 +35,7 @@ export const TableList = styled.table`
 
     &:last-child {
       border: none;
+      padding-bottom: 0;
     }
 
     th {

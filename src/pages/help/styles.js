@@ -21,6 +21,7 @@ export const HelpList = styled.table`
 
   thead tr {
     padding: 0;
+    margin-bottom: 10px;
     text-align: left;
     border: none;
   }

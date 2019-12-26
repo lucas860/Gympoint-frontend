@@ -58,17 +58,17 @@ export default function PlanList() {
 
       <TableList>
         <thead>
-          <TableLine>
+          <tr>
             <th>TÍTULO</th>
             <th>DURAÇÃO</th>
             <th>VALOR p/ MÊS</th>
             <th> </th>
-          </TableLine>
+          </tr>
         </thead>
 
         <tbody>
           {plans.map(plan => (
-            <TableLine key={plan.id}>
+            <tr key={plan.id}>
               <td>{plan.title}</td>
               <td>
                 {plan.duration > 1
@@ -84,7 +84,7 @@ export default function PlanList() {
                   apagar
                 </DelButton>
               </td>
-            </TableLine>
+            </tr>
           ))}
         </tbody>
       </TableList>
