@@ -13,7 +13,7 @@ import {
   EditButton,
   DelButton,
 } from '~/pages/_layouts/default/styles';
-import { TableList, TableLine } from './styles';
+import { TableList } from './styles';
 
 export default function PlanList() {
   const [plans, setPlans] = useState([]);

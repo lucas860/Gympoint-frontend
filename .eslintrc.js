@@ -28,7 +28,8 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-console': ['warn', { allow: ['tron'] }],
     'camelcase': 'off',
-    'react/jsx-props-no-spreading': 'off'
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
   },
   settings: {
     'import/resolver': {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
@@ -92,8 +92,8 @@ export default function RegistrationList() {
                 {reg.active ? (
                   <img src={active} alt="gympoint" />
                 ) : (
-                  <img src={inactive} alt="gympoint" />
-                )}
+                    <img src={inactive} alt="gympoint" />
+                  )}
               </td>
               <td>
                 <EditButton onClick={() => handleEditRegistration(reg)}>

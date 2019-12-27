@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import api from '~/services/api';
-import history from '~/services/history';
 
 import {
   openHelpOrder,
@@ -25,6 +22,7 @@ export default function HelpOrders() {
     }
 
     loadHelpOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleOpen({ id, question }) {

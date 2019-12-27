@@ -31,7 +31,7 @@ export default function RegistrationRegister() {
     }
 
     return null;
-  }, [getPlan]);
+  }, [plans, getPlan]);
 
   const endDate = useMemo(() => {
     if (getPlan) {
@@ -43,7 +43,7 @@ export default function RegistrationRegister() {
     }
 
     return null;
-  }, [getPlan, selectedDate]);
+  }, [plans, getPlan, selectedDate]);
 
   useEffect(() => {
     async function loadOptions() {

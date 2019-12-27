@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import api from '~/services/api';
@@ -14,8 +14,8 @@ import {
   Line,
 } from '~/pages/_layouts/default/styles';
 
-export default function StudentUpdate(props) {
-  const [student, setStudent] = useState(props.location.state.student);
+export default function StudentUpdate({ location }) {
+  const [student, setStudent] = useState(location.state.student);
 
   async function handleSubmit({ name, email, idade, peso, altura }) {
     try {
@@ -86,9 +86,9 @@ export default function StudentUpdate(props) {
 }
 
 StudentUpdate.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      student_id: PropTypes.number,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      student: PropTypes.object.isRequired,
     }).isRequired,
   }).isRequired,
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { parseISO, format, addMonths } from 'date-fns';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { toast } from 'react-toastify';
@@ -18,10 +19,11 @@ import {
 } from '~/pages/_layouts/default/styles';
 import { BoxDatePicker, CardSelect } from './styles';
 
-export default function RegistrationUpdate(props) {
+export default function RegistrationUpdate({ location }) {
+  const registration = location.state.reg;
+
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);
-  const [registration, setRegistration] = useState(props.location.state.reg);
   const [selectedStudent, setSelectedStudent] = useState(
     registration.student.id
   );
@@ -39,7 +41,7 @@ export default function RegistrationUpdate(props) {
     [defaultDate, getPlan]
   );
 
-  console.tron.log(registration.start_date);
+  console.tron.log(registration);
 
   useEffect(() => {
     async function loadOptions() {
@@ -149,3 +151,11 @@ export default function RegistrationUpdate(props) {
     </Container>
   );
 }
+
+RegistrationUpdate.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      reg: PropTypes.object.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

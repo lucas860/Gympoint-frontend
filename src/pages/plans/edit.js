@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import api from '~/services/api';
@@ -15,10 +15,11 @@ import {
   Line,
 } from '~/pages/_layouts/default/styles';
 
-export default function PlanUpdate(props) {
-  const [plan, setPlan] = useState(props.location.state.plan);
-  const [dr, setDr] = useState(props.location.state.plan.duration);
-  const [pr, setPr] = useState(props.location.state.plan.price);
+export default function PlanUpdate({ location }) {
+  // const [plan, setPlan] = useState(props.location.state.plan);
+  const { plan } = location.state;
+  const [dr, setDr] = useState(location.state.plan.duration);
+  const [pr, setPr] = useState(location.state.plan.price);
 
   const totalPrice = useMemo(() => formatPrice(dr * pr), [dr, pr]);
 
@@ -92,9 +93,9 @@ export default function PlanUpdate(props) {
 }
 
 PlanUpdate.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      plan_id: PropTypes.string,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      plan: PropTypes.object.isRequired,
     }).isRequired,
   }).isRequired,
 };
