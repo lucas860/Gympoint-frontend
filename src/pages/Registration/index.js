@@ -57,6 +57,9 @@ export default function RegistrationList() {
     if (confirm) {
       await api.delete(`/registration/${id}`);
 
+      const newList = regs.filter(r => r.id !== id);
+      setRegs(newList);
+
       toast.success('Usuário deletado com sucesso');
     }
   }

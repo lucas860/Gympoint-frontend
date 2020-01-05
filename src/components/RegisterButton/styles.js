@@ -5,6 +5,7 @@ export const Button = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
 
   width: 142px;
   height: 36px;

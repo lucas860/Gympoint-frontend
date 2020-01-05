@@ -8,6 +8,7 @@ import ContentHeander from '~/components/ContentHeader';
 
 import {
   Container,
+  ContainerBox,
   Card,
   CardInput,
   BackButton,
@@ -41,53 +42,55 @@ export default function PlanUpdate({ location }) {
 
   return (
     <Container>
-      <ContentHeander>
-        <h1>Edição de plano</h1>
-        <div>
-          <BackButton to="/plans">VOLTAR</BackButton>
-
-          <SaveButton submit type="submit" form="plan">
-            SALVAR
-          </SaveButton>
-        </div>
-      </ContentHeander>
-
-      <Card id="plan" initialData={plan} onSubmit={handleSubmit}>
-        <strong>TÍTULO DO PLANO</strong>
-        <CardInput id="title" name="title" type="name" />
-
-        <Line>
+      <ContainerBox>
+        <ContentHeander>
+          <h1>Edição de plano</h1>
           <div>
-            <strong>DURAÇÃO (em meses)</strong>
-            <CardInput
-              name="duration"
-              type="number"
-              onChange={e => setDr(e.target.value)}
-            />
-          </div>
+            <BackButton to="/plans">VOLTAR</BackButton>
 
-          <div>
-            <strong>PREÇO MENSAL</strong>
-            <CardInput
-              name="price"
-              step={0.1}
-              type="number"
-              onChange={e => setPr(e.target.value)}
-            />
+            <SaveButton submit type="submit" form="plan">
+              SALVAR
+            </SaveButton>
           </div>
+        </ContentHeander>
 
-          <div>
-            <strong>PREÇO TOTAL</strong>
-            <CardInput
-              name="total"
-              value={totalPrice}
-              step={0.01}
-              disabled
-              readOnly
-            />
-          </div>
-        </Line>
-      </Card>
+        <Card id="plan" initialData={plan} onSubmit={handleSubmit}>
+          <strong>TÍTULO DO PLANO</strong>
+          <CardInput id="title" name="title" type="name" />
+
+          <Line>
+            <div>
+              <strong>DURAÇÃO (em meses)</strong>
+              <CardInput
+                name="duration"
+                type="number"
+                onChange={e => setDr(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <strong>PREÇO MENSAL</strong>
+              <CardInput
+                name="price"
+                step={0.1}
+                type="number"
+                onChange={e => setPr(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <strong>PREÇO TOTAL</strong>
+              <CardInput
+                name="total"
+                value={totalPrice}
+                step={0.01}
+                disabled
+                readOnly
+              />
+            </div>
+          </Line>
+        </Card>
+      </ContainerBox>
     </Container>
   );
 }

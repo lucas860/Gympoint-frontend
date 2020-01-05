@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  handleAnswerText,
-  answerHelpRequest,
-} from '~/store/modules/help/action';
+import { answerHelpRequest } from '~/store/modules/help/action';
 
 import { ModalContainer, Answer, AnswerForm } from './styles';
 
@@ -12,14 +9,11 @@ export default function AnswerModal(props) {
   const dispatch = useDispatch();
   const question = useSelector(state => state.help.question);
   const helpId = useSelector(state => state.help.helpOrder);
-  const answer = useSelector(state => state.help.answer);
+
+  const [answer, setAnswer] = useState('');
 
   function handleSubmit() {
     dispatch(answerHelpRequest(helpId, answer));
-  }
-
-  function handleAnswer(text) {
-    dispatch(handleAnswerText(text));
   }
 
   return (
@@ -32,11 +26,7 @@ export default function AnswerModal(props) {
 
         <AnswerForm id="answer" onSubmit={handleSubmit}>
           <strong>SUA RESPOSTA</strong>
-          <textarea
-            name="answer"
-            value={answer}
-            onChange={e => handleAnswer(e.target.value)}
-          />
+          <textarea name="answer" onChange={e => setAnswer(e.target.value)} />
 
           <button type="submit">Responder aluno</button>
         </AnswerForm>

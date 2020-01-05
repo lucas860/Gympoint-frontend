@@ -13,7 +13,7 @@ import { ListContainer, TableList, Search } from './styles';
 
 export default function StudentList() {
   const [students, setStudents] = useState([]);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function loadStudents() {
@@ -34,6 +34,9 @@ export default function StudentList() {
 
     if (confirm) {
       await api.delete(`/student/${id}`);
+
+      const newList = students.filter(s => s.id !== id);
+      setStudents(newList);
 
       toast.success('Usuário deletado com sucesso');
     }

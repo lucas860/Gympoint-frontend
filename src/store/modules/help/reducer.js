@@ -30,10 +30,6 @@ export default function help(state = INITIAL_STATE, action) {
         draft.question = null;
         break;
       }
-      case '@help/HANDLE_ANSWER_HELP_TEXT': {
-        draft.answer = action.payload.text;
-        break;
-      }
       case '@help/ANSWER_HELP_REQUEST': {
         break;
       }

@@ -9,7 +9,14 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  margin: 50px 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+export const ContainerBox = styled.div`
+  width: 900px;
 `;
 
 export const Card = styled(Form)`

@@ -10,6 +10,7 @@ import RegisterButton from '~/components/RegisterButton';
 
 import {
   Container,
+  ContainerBox,
   EditButton,
   DelButton,
 } from '~/pages/_layouts/default/styles';
@@ -43,51 +44,59 @@ export default function PlanList() {
     if (confirm) {
       await api.delete(`/plan/${id}`);
 
+      const newList = plans.filter(p => p.id !== id);
+      setPlans(newList);
+
       toast.success('Usuário deletado com sucesso');
     }
   }
 
   return (
     <Container>
-      <ContentHeader>
-        <h1>Gerenciando Planos</h1>
-        <div>
-          <RegisterButton to="/plan/register" />
-        </div>
-      </ContentHeader>
+      <ContainerBox>
+        <ContentHeader>
+          <h1>Gerenciando Planos</h1>
+          <div>
+            <RegisterButton to="/plan/register" />
+          </div>
+        </ContentHeader>
 
-      <TableList>
-        <thead>
-          <tr>
-            <th>TÍTULO</th>
-            <th>DURAÇÃO</th>
-            <th>VALOR p/ MÊS</th>
-            <th> </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {plans.map(plan => (
-            <tr key={plan.id}>
-              <td>{plan.title}</td>
-              <td>
-                {plan.duration > 1
-                  ? `${plan.duration} Meses`
-                  : `${plan.duration} Mês`}
-              </td>
-              <td>{plan.priceFormatted}</td>
-              <td>
-                <EditButton onClick={() => handleEditPlan(plan)}>
-                  editar
-                </EditButton>
-                <DelButton type="button" onClick={() => confirmDelete(plan.id)}>
-                  apagar
-                </DelButton>
-              </td>
+        <TableList>
+          <thead>
+            <tr>
+              <th>TÍTULO</th>
+              <th>DURAÇÃO</th>
+              <th>VALOR p/ MÊS</th>
+              <th> </th>
             </tr>
-          ))}
-        </tbody>
-      </TableList>
+          </thead>
+
+          <tbody>
+            {plans.map(plan => (
+              <tr key={plan.id}>
+                <td>{plan.title}</td>
+                <td>
+                  {plan.duration > 1
+                    ? `${plan.duration} Meses`
+                    : `${plan.duration} Mês`}
+                </td>
+                <td>{plan.priceFormatted}</td>
+                <td>
+                  <EditButton onClick={() => handleEditPlan(plan)}>
+                    editar
+                  </EditButton>
+                  <DelButton
+                    type="button"
+                    onClick={() => confirmDelete(plan.id)}
+                  >
+                    apagar
+                  </DelButton>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </TableList>
+      </ContainerBox>
     </Container>
   );
 }

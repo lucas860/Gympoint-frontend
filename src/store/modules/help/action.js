@@ -24,13 +24,6 @@ export function closeHelpOrder() {
   };
 }
 
-export function handleAnswerText(text) {
-  return {
-    type: '@help/HANDLE_ANSWER_HELP_TEXT',
-    payload: { text },
-  };
-}
-
 export function answerHelpRequest(helpOrder, answer) {
   return {
     type: '@help/ANSWER_HELP_REQUEST',
